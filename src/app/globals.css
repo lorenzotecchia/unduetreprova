@@ -1,42 +1,59 @@
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  zoom: 175%;
+  @apply bg-gradient-to-b from-purple-900 to-black;
+  @apply text-white;
+  @apply flex;
+  @apply flex-col;
+  @apply items-center;
+  @apply justify-center;
+  @apply min-h-screen;
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+h1 {
+  @apply text-4xl;
+  @apply font-bold;
+  @apply text-center;
+  @apply pt-4; /* Padding top */
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+main {
+  @apply flex;
+  @apply flex-col;
+  @apply items-center;
+  @apply justify-center;
+  @apply h-screen;
+  @apply p-4; /* Padding around the events list */
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+input {
+  @apply text-black; /* Text inside the input should be black */
+  @apply mx-auto; /* Center the input horizontally */
+}
+
+.event-list {
+  @apply flex;
+  @apply flex-col;
+  @apply items-center; /* Center the list horizontally */
+}
+
+.event-item {
+  @apply text-left; /* Align text to the left */
+  @apply w-full; /* Ensure the item takes full width */
+}
+
+.button-container {
+  @apply w-full; /* Ensure the container takes full width */
+  @apply flex; /* Use flexbox */
+  @apply justify-end; /* Align items to the right */
+}
+
+button {
+ @apply bg-white; /* Make buttons visible */
+ @apply text-black; /* Ensure text on buttons is visible */
+ @apply p-2; /* Add padding to buttons */
+ @apply rounded; /* Add rounded corners to buttons */
 }
