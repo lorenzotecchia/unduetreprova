@@ -1,9 +1,11 @@
 "use client";
 import { SessionProvider } from "next-auth/react";
-import Event from "./components/event"
+import Event from "./components/events"
 
-export default function Home(){
-  <SessionProvider>
-   <Event />
-  </SessionProvider>
+export default function Home() {
+  return (
+    <SessionProvider>
+      <Event />
+    </SessionProvider>
+  );
 }

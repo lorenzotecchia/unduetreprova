@@ -44,11 +44,15 @@ export default function Event() {
     }
   }
 
-//if (session.status === "unauthenticated") return <> </>
-return (
+if (session.status === "unauthenticated") return <> </>
+else return(
   <div>
     <h1>Events {events.length}</h1>
     <main>
+      <div>
+        <span> Hello {session.data?.user?.name}</span>
+        <button onClick={() => signOut()}>signOut</button>
+      </div>
       <form onSubmit={addEvent}>
         <input
           value={newEventTitle}
