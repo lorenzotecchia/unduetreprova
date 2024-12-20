@@ -1,17 +1,33 @@
-import { Allow, Entity, Fields } from "remult";
+// src/models/notification.ts
+import { Allow, Entity, Fields, Relations } from "remult";
+import { Event } from "./event";
+import { User } from "./user";
 
-@Entity("Notification", {
-  allowApiCrud: Allow.authenticated,
+@Entity("notifications", {
+  allowApiCrud: Allow.authenticated
 })
 export class Notification {
   @Fields.cuid()
   id = "";
+
   @Fields.string()
-  notificationName= "";
+  message = "";
+
   @Fields.string()
-  notificationDate = "";
+  userId = "";
+
+  @Fields.string()
+  eventId = "";
+
   @Fields.boolean()
-  lunchTime = false;
+  read = false;
+
   @Fields.createdAt()
   createdAt = new Date();
+
+  @Relations.toOne(() => Event, { field: "eventId" })
+  event?: Event;
+
+  @Relations.toOne(() => User, { field: "userId" })
+  user?: User;
 }

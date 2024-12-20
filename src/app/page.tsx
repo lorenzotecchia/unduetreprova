@@ -1,11 +1,7 @@
-"use client";
-import { SessionProvider } from "next-auth/react";
+// src/app/page.tsx
+'use client';
 import Event from "./components/events"
 
 export default function Home() {
-  return (
-    <SessionProvider>
-      <Event />
-    </SessionProvider>
-  );
+    return <Event />;
 }

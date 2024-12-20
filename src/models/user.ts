@@ -1,17 +1,19 @@
+// src/models/user.ts
 import { Allow, Entity, Fields } from "remult";
 
-@Entity("User", {
-  allowApiCrud: Allow.authenticated,
+@Entity("users", {
+    allowApiCrud: Allow.authenticated
 })
 export class User {
-  @Fields.cuid()
-  id = "";
-  @Fields.string<User>({
-    validate: (user) => {
-      if (user.userName.length < 3) throw Error("Too short");
-    },
-  })
-  userName = "";
-  @Fields.createdAt()
-  createdAt = new Date();
+    @Fields.cuid()
+    id = "";
+
+    @Fields.string()
+    name = "";
+
+    @Fields.json()
+    roles: string[] = [];
+
+    @Fields.createdAt()
+    createdAt = new Date();
 }

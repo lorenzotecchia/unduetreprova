@@ -1,28 +1,29 @@
+// src/app/components/events.tsx
 "use client";
 import { useState, useEffect, FormEvent } from 'react';
 import { Event as EventModel} from '../../models/event'
-import {remult} from "remult";
+import {remult, UserInfo} from "remult";
 import { useSession, signIn, signOut } from "next-auth/react";
+import { useRouter } from 'next/navigation';
 
-const taskRepo = remult.repo(EventModel)
+const taskRepo = remult.repo(EventModel);
 
 export default function Event() {
   const [events, setEvents] = useState<EventModel[]>([]);
   const [newEventTitle, setNewEventTitle] = useState("");
   const session = useSession();
+  const router = useRouter();
 
   useEffect(() => {
-    if (session.status === "unauthenticated") signIn()
+    remult.user = session.data?.user as UserInfo;
+    if (session.status === "unauthenticated") signIn();
     else if (session.status === "authenticated")
       return taskRepo.liveQuery({
         orderBy: {
           createdAt: 'desc'
-        },
-        where: {
-          lunchTime: undefined,
         }
       }).subscribe((info: any) => setEvents(info.applyChanges));
-    }, [session]);
+  }, [session]);
 
   async function addEvent(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -44,32 +45,37 @@ export default function Event() {
     }
   }
 
-if (session.status === "unauthenticated") return <> </>
-else return(
-  <div>
-    <h1>Events {events.length}</h1>
-    <main>
-      <div>
-        <span> Hello {session.data?.user?.name}</span>
-        <button onClick={() => signOut()}>signOut</button>
-      </div>
-      <form onSubmit={addEvent}>
-        <input
-          value={newEventTitle}
-          placeholder="Event Name"
-          onChange={e => setNewEventTitle(e.target.value)}
-        />
-        <button type="submit">Add</button>
-      </form>
-      <div className="event-list">
-        {events.map(event => (
-          <div key={event.id} className="event-item">
-            <span>{event.eventName}</span>
-            <button onClick={() => deleteEvent(event)}>Delete</button>
-          </div>
-        ))}
-      </div>
-    </main>
-  </div>
-);
+  function handleEventClick(event: EventModel) {
+    router.push(`/events/${event.id}`);
+  }
+
+  if (session.status === "unauthenticated") return <> </>;
+  
+  return (
+    <div>
+      <h1>Events {events.length}</h1>
+      <main>
+        <div>
+          <span>Hello {remult.user?.name}</span>
+          <button onClick={() => signOut()}>Sign Out</button>
+        </div>
+        <form onSubmit={addEvent}>
+          <input
+            value={newEventTitle}
+            placeholder="Event Name"
+            onChange={e => setNewEventTitle(e.target.value)}
+          />
+          <button type="submit">Add</button>
+        </form>
+        <div className="event-list">
+          {events.map(event => (
+            <div key={event.id} className="event-item" onClick={() => handleEventClick(event)}>
+              <h2>{event.eventName}</h2>
+              <p>{new Date(event.createdAt).toLocaleDateString()}</p>
+            </div>
+          ))}
+        </div>
+      </main>
+    </div>
+  );
 }
