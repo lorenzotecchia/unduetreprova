@@ -1,10 +1,9 @@
 import { remultNextApp } from "remult/remult-next";
 import { createPostgresDataProvider } from "remult/postgres";
 import { Event } from "@/models/event";
-import { getUserOnServer } from "../auth/[...nextauth]/route";
 import { User } from "@/models/user";
 import { Notification } from "@/models/notification";
-
+import { getUserOnServer } from "../../../app/utils/authOptions"
 
 const api = remultNextApp({
 	entities: [Event, Notification, User],
