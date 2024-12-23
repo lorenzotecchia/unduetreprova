@@ -2,18 +2,18 @@
 import { Allow, Entity, Fields } from "remult";
 
 @Entity("users", {
-    allowApiCrud: Allow.authenticated
+	allowApiCrud: Allow.authenticated
 })
 export class User {
-    @Fields.cuid()
-    id = "";
+	@Fields.cuid()
+	id = "";
 
-    @Fields.string()
-    name = "";
+	@Fields.string()
+	name = "";
 
-    @Fields.json()
-    roles: string[] = [];
+	@Fields.json()
+	roles: string[] = [];
 
-    @Fields.createdAt()
-    createdAt = new Date();
+	@Fields.createdAt()
+	createdAt = new Date();
 }

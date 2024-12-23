@@ -5,16 +5,16 @@ import { SessionProvider } from "next-auth/react";
 import Navbar from './navbar'
 
 export default function ClientProvider({
-    children,
+	children,
 }: {
-    children: React.ReactNode;
+	children: React.ReactNode;
 }) {
-    return (
-        <SessionProvider>
-            <Navbar />
-            <div className="pt-16">
-                {children}
-            </div>
-        </SessionProvider>
-    );
+	return (
+		<SessionProvider>
+			<Navbar />
+			<div className="pt-16">
+				{children}
+			</div>
+		</SessionProvider>
+	);
 }
